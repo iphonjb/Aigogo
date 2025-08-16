@@ -1,0 +1,13 @@
+﻿name: iOS Build
+
+on:
+  push:
+    branches: [ "main", "feature/full-integration" ]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build placeholder
+        run: echo "iOS build would run here"
