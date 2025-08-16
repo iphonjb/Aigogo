@@ -4,7 +4,7 @@ on:
     branches: [main]
 
 concurrency:
-  group: "AIgogo-iOS-Build"
+  group: AIgogo-iOS-Build
   cancel-in-progress: true
 
 jobs:
@@ -19,7 +19,11 @@ jobs:
       with:
         xcode-version: '16.2'
 
-    - name: Ensure Podfile and Workspace
+    - name: Install CocoaPods
+      run: |
+        gem install cocoapods
+
+    - name: Ensure Podfile & install Pods
       run: |
         if [ ! -f Podfile ]; then
           cat <<EOP > Podfile
@@ -30,14 +34,7 @@ target 'AIgogo' do
 end
 EOP
         fi
-
-        sudo gem install cocoapods
         pod install --repo-update
-
-        if [ ! -f Aigogo.xcworkspace ] && [ ! -f Aigogo.xcodeproj ]; then
-          echo "❌ Aigogo.xcworkspace / Aigogo.xcodeproj 둘 다 없음. 빌드 불가"
-          exit 66
-        fi
 
     - name: Build IPA
       run: |
@@ -49,7 +46,6 @@ EOP
         fi
 
         if [ ! -f exportOptions.plist ]; then
-          echo "❌ exportOptions.plist 없음. IPA 추출 불가"
           exit 66
         fi
 
