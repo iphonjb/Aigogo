@@ -35,7 +35,7 @@ EOP
         pod install --repo-update
 
         if [ ! -f Aigogo.xcworkspace ] && [ ! -f Aigogo.xcodeproj ]; then
-          echo "❌ 프로젝트 없음. 빌드 불가"
+          echo "❌ Aigogo.xcworkspace / Aigogo.xcodeproj 둘 다 없음. 빌드 불가"
           exit 66
         fi
 
