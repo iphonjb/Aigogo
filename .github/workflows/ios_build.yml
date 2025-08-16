@@ -35,6 +35,7 @@ EOP
         pod install --repo-update
 
         if [ ! -f Aigogo.xcworkspace ] && [ ! -f Aigogo.xcodeproj ]; then
+          echo "❌ 프로젝트 없음. 빌드 불가"
           exit 66
         fi
 
@@ -47,7 +48,11 @@ EOP
           xcodebuild -project Aigogo.xcodeproj -scheme AIgogo -sdk iphoneos -configuration Release archive -archivePath ./build/AIgogo.xcarchive
         fi
 
-        if [ ! -f exportOptions.plist ]; then exit 66 }
+        if [ ! -f exportOptions.plist ]; then
+          echo "❌ exportOptions.plist 없음. IPA 추출 불가"
+          exit 66
+        fi
+
         xcodebuild -exportArchive -archivePath ./build/AIgogo.xcarchive -exportOptionsPlist exportOptions.plist -exportPath ./build
 
     - name: Upload IPA
