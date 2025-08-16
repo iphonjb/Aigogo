@@ -1,0 +1,9 @@
+﻿<?xml version=""1.0"" encoding=""UTF-8""?>
+<plist version=""1.0"">
+<dict>
+    <key>MinimumOSVersion</key>
+    <string>15.0</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.user.AIgogo</string>
+</dict>
+</plist>
