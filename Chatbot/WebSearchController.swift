@@ -19,7 +19,6 @@ class WebSearchController {
         }.resume()
     }
     private func selectEngine() -> SearchEngine {
-        // 자동 엔진 선택
         return .opensearch
     }
 }
