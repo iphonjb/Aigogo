@@ -6,6 +6,6 @@ class MainMenuController: UIViewController {
         setupMenu()
     }
     func setupMenu() {
-        // 세로 메뉴 및 다이나믹 UI 실제 구현
+        // 실제 세로 메뉴 및 다이나믹 UI 구현
     }
 }
