@@ -22,16 +22,17 @@ jobs:
     - name: Install CocoaPods
       run: gem install cocoapods
 
-    - name: Ensure Podfile & Install Pods
+    - name: Ensure Podfile & install Pods
       run: |
         if [ ! -f Podfile ]; then
-          echo "platform :ios, '15.0'" > Podfile
-          echo "use_frameworks!" >> Podfile
-          echo "" >> Podfile
-          echo "target 'AIgogo' do" >> Podfile
-          echo "end" >> Podfile
-          echo "" >> Podfile
-          echo "project 'Aigogo.xcodeproj'" >> Podfile
+          cat <<EOP > Podfile
+platform :ios, '15.0'
+use_frameworks!
+
+target 'AIgogo' do
+  project 'Aigogo.xcodeproj'
+end
+EOP
         fi
         pod install --repo-update
 
@@ -45,6 +46,7 @@ jobs:
         fi
 
         if [ ! -f exportOptions.plist ]; then
+          echo "❌ exportOptions.plist 파일이 없습니다"
           exit 66
         fi
 
