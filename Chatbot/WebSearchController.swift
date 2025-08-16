@@ -1,11 +1,11 @@
 ﻿import Foundation
 class WebSearchController {
     enum SearchEngine { case google, duckduckgo, naver }
-    
+
     func search(query: String, completion: @escaping (String) -> Void) {
         let engine = selectEngine()
         let urlString: String
-        
+
         switch engine {
         case .google:
             urlString = ""https://www.google.com/search?q=\(query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? """")""
@@ -14,14 +14,14 @@ class WebSearchController {
         case .naver:
             urlString = ""https://openapi.naver.com/v1/search/webkr.json?query=\(query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? """")""
         }
-        
+
         guard let url = URL(string: urlString) else { completion(""); return }
         var request = URLRequest(url: url)
         if engine == .naver {
             request.addValue(""<NAVER_CLIENT_ID>"", forHTTPHeaderField: ""X-Naver-Client-Id"")
             request.addValue(""<NAVER_CLIENT_SECRET>"", forHTTPHeaderField: ""X-Naver-Client-Secret"")
         }
-        
+
         URLSession.shared.dataTask(with: request) { data, _, _ in
             guard let data = data else { completion(""); return }
             var resultText = ""
@@ -42,7 +42,7 @@ class WebSearchController {
             completion(resultText)
         }.resume()
     }
-    
+
     private func selectEngine() -> SearchEngine {
         // 지역/환경 감지 후 엔진 자동 선택
         return .google
