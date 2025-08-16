@@ -22,13 +22,11 @@ jobs:
     - name: Ensure Podfile & Install Pods
       run: |
         if [ ! -f Podfile ]; then
-          cat <<EOP > Podfile
-platform :ios, '15.0'
-use_frameworks!
-
-target 'AIgogo' do
-end
-EOP
+          echo "platform :ios, '15.0'" > Podfile
+          echo "use_frameworks!" >> Podfile
+          echo "" >> Podfile
+          echo "target 'AIgogo' do" >> Podfile
+          echo "end" >> Podfile
         fi
         gem install cocoapods
         pod install --repo-update
@@ -41,9 +39,11 @@ EOP
         else
           xcodebuild -project Aigogo.xcodeproj -scheme AIgogo -sdk iphoneos -configuration Release archive -archivePath ./build/AIgogo.xcarchive
         fi
+
         if [ ! -f exportOptions.plist ]; then
           exit 66
         fi
+
         xcodebuild -exportArchive -archivePath ./build/AIgogo.xcarchive -exportOptionsPlist exportOptions.plist -exportPath ./build
 
     - name: Upload IPA
