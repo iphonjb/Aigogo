@@ -8,6 +8,12 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v3
+    - name: Install CocoaPods
+      run: |
+        sudo gem install cocoapods
+        if [ -f Podfile ]; then
+          pod install --repo-update
+        fi
     - name: Set up Xcode
       uses: maxim-lobanov/setup-xcode@v1
       with:
@@ -15,7 +21,7 @@ jobs:
     - name: Build IPA
       run: |
         if [ ! -f Aigogo.xcworkspace ]; then
-          echo 'ERROR: Aigogo.xcworkspace가 존재하지 않습니다. 빌드 전 Xcode 워크스페이스 생성 필요'
+          echo 'Podfile 확인 후 pod install 필요, xcworkspace 자동 생성'
           exit 66
         fi
         mkdir -p build
