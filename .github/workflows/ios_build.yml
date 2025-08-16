@@ -19,6 +19,9 @@ jobs:
       with:
         xcode-version: '16.2'
 
+    - name: Install CocoaPods
+      run: gem install cocoapods
+
     - name: Ensure Podfile & Install Pods
       run: |
         if [ ! -f Podfile ]; then
@@ -27,8 +30,9 @@ jobs:
           echo "" >> Podfile
           echo "target 'AIgogo' do" >> Podfile
           echo "end" >> Podfile
+          echo "" >> Podfile
+          echo "project 'Aigogo.xcodeproj'" >> Podfile
         fi
-        gem install cocoapods
         pod install --repo-update
 
     - name: Build IPA
